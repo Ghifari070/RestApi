@@ -29,7 +29,7 @@ function getListTeams() {
                     <p>Berdiri: ${team.founded} <br>
                        Markas: ${team.venue}
                     </p>
-                    <a href="#" class="secondary-content" data-id="${team.id}"><i class="material-icons" data-id="${team.id}">info</i></a>
+                    <a href="#" data-id="${team.id}" class="secondary-content" ><i data-id="${team.id}" class="material-icons" >info</i></a>
                 </li>
                 `
             });
