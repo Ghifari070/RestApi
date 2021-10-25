@@ -29,7 +29,7 @@ function getListTeams() {
                     <p>Berdiri: ${team.founded} <br>
                        Markas: ${team.venue}
                     </p>
-                    <a href="#" data-id="${team.id}" class="secondary-content" ><i data-id="${team.id}" class="material-icons" >info</i></a>
+                    <a href="#${team.id}" data-id="${team.id}" class="secondary-content" ><i data-id="${team.id}" class="material-icons" >info</i></a>
                 </li>
                 `
             });
@@ -37,7 +37,8 @@ function getListTeams() {
             const detil = document.querySelectorAll('.secondary-content');
             detil.forEach(btn => { 
                 btn.onclick = (e) => {
-                    showTeamInfo(e.target.dataset.id);
+                    loadPage(e.target.dataset.id);
+                    // showTeamInfo(e.target.dataset.id);
                     // console.log(e.target.dataset.id);
                 }
             })
@@ -47,6 +48,9 @@ function getListTeams() {
 }
 
 function showTeamInfo(id) {
+
+    
+
     let url = baseUrl + "teams/"+ id;
     
     fetch(url, fetchHeader)
@@ -151,6 +155,7 @@ function showTeamInfo(id) {
             // console.error(err);
             console.log(err);
         })
+        
 }
 
 function getListStandings() {
@@ -255,10 +260,13 @@ function loadPage(page) {
         case "matches":
             getListMatches();
             break;
-        case "":
-            getListTeams();
+        case page:
+            showTeamInfo(page);
             break;
+
     }
+
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -277,3 +285,4 @@ document.addEventListener('DOMContentLoaded', function () {
     if (page === "" || page === "!") page = "teams";
     loadPage(page);
 });
+
