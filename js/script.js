@@ -35,7 +35,7 @@ function getListTeams() {
             });
             contents.innerHTML = '<ul class="collection">' + teams + '</ul>';
             const detil = document.querySelectorAll('.secondary-content');
-            detil.forEach(btn => { 
+            detil.forEach(btn => {
                 btn.onclick = (e) => {
                     loadPage(e.target.dataset.id);
                     // showTeamInfo(e.target.dataset.id);
@@ -49,105 +49,29 @@ function getListTeams() {
 
 function showTeamInfo(id) {
 
-    
 
-    let url = baseUrl + "teams/"+ id;
-    
+
+    let url = baseUrl + "teams/" + id;
+
     fetch(url, fetchHeader)
         .then(response => response.json())
         .then(data => {
-            title.innerHTML = "Tim " + data.name + " ("+ data.tla +")"
-            //  Kompetisi yang di ikuti
-            let kompetisi = "";
-            let x = 1;
-            data.activeCompetitions.forEach(team => {
-                kompetisi += `
-                <tr>
-                    <td style="padding-left:20px;">${x}.</td>
-                    <td>${team.name}</td>
-                    <td>${team.plan}</td>
-                </tr>
-                `;
-                x++;
-
-            });
-            //--------------------------------
-            // pemain
-            let pemain = "";
-            let i = 1;
-            data.squad.forEach(team => {
-                pemain += `
-                <tr>
-                    <td style="padding-left:20px;">${i}.</td>
-                    <td>${team.name}</td>
-                    <td>${team.position}</td>
-                    <td>${team.dateOfBirth}</td>
-                    <td>${team.countryOfBirth}</td>
-                    <td>${team.nationality}</td>
-                    <td>${team.shirtNumber}</td>
-                    <td>${team.role}</td>
-                </tr>
-                `;
-                i++;
-
-            });
-            //------------------------------
+            title.innerHTML = "Tim " + data.name + " (" + data.tla + ")"
+            
             //content utama
             contents.innerHTML = `
-                <div class="row">
-                    <div class="col s6">
+                <div>
+                    <div>
                         <img src="${data.crestUrl}" alt="${data.area.name}" width="300px"></td>
                     </div>
-                    <div class="col s1">
-                        <p>Daerah   :</p>
-                        <p>Alamat   :</p>
-                        <p>Nomer    :</p>
-                        <p>Situs    :</p>
-                        <p>Email    :</p>
-                        <p>Lokasi   :</p>
+                    <div>
+                        <p>Daerah : ${data.area.name}</p>
+                        <p>Alamat :${data.address}</p>
+                        <p>Nomer  :${data.phone}</p>
+                        <p>Situs  :${data.website}</p>
+                        <p>Email  :${data.email}</p>
+                        <p>Lokasi :${data.venue}</p>
                     </div>
-                    <div class="col s5">
-                        <p>${data.area.name}</p>
-                        <p>${data.address}</p>
-                        <p>${data.phone}</p>
-                        <p>${data.website}</p>
-                        <p>${data.email}</p>
-                        <p>${data.venue}</p>
-                    </div>
-                </div>
-
-                <h5>KOMPETISI</h5>
-                <div class="card">
-                    <table class="striped responsive-table">
-                        <thead>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Rencana</th>
-                        </thead>
-                        <tbody>
-                            ${kompetisi}
-                        </tbody>
-                    </table>
-                </div>
-
-                <h5>PEMAIN</h5>
-                <div class="card ">
-                    <table class="striped responsive-table">
-                    <thead>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Posisi</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Asal Negara</th>
-                        <th>Kebangsaan</th>
-                        <th>Nomer punggung</th>
-                        <th>Sebagai</th>
-                    </thead>
-                    <tbody>
-                            ${pemain}
-                    </tbody>
-                    </table>
-
                 </div>
             `;
             //------------------------------
@@ -155,7 +79,7 @@ function showTeamInfo(id) {
             // console.error(err);
             console.log(err);
         })
-        
+
 }
 
 function getListStandings() {
@@ -285,4 +209,3 @@ document.addEventListener('DOMContentLoaded', function () {
     if (page === "" || page === "!") page = "teams";
     loadPage(page);
 });
-
